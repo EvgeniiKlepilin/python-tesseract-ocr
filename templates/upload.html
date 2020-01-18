@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Optical Character Recognition | Upload Image</title>
+
+    
+</head>
+
+<body>
+    <div id="overlay" class="overlay d-flex justify-content-center align-items-center invisible">
+        <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Optical Character Recognition</h1>
+                <p class="lead">With Google Tesseract OCR</p>
+            </div>
+        </div>
+        {% if msg and alert %}
+        <div class="alert alert-{{ alert }} alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+        <div class="row justify-content-center align-items-start">
+            <div class="col-sm-6">
+                <h2>Upload new File</h2>
+
+                <form method="post" enctype="multipart/form-data" onsubmit="return handleUpload(event);"> 
+                    <p></p>
+                    <input class="btn btn-secondary" type="file" name="file">
+                    <input class="btn btn-primary" id="submit" type="submit" value="Upload">
+                </form>
+                
+                {% if extracted_text %}
+                    <h3>Result:</h3>
+                    <div class="form-group">
+                        <label for="extracted_text">The extracted text from the image:</label>
+                        <textarea class="form-control" id="extracted_text" rows="5" readonly>{{ extracted_text }}</textarea>
+                    </div>
+                {% endif %}
+            </div>
+            {% if img_src %}
+            <div class="col-sm-6">
+                <img class="uploaded-image" src="{{ img_src }}">                
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!-- JS Scripts -->
+    <script src="{{ url_for('static', filename='js/upload.js') }}" type="text/javascript"></script>
+</body>
+
+</html>
